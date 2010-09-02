@@ -1,0 +1,538 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:dcterms="http://purl.org/dc/terms/" xmlns:thr="http://purl.org/syndication/thread/1.0" xmlns:opds="http://opds-spec.org/2010/catalog" xml:lang="en" xmlns:app="http://www.w3.org/2007/app" xmlns:opensearch="http://a9.com/-/spec/opensearch/1.1/" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.w3.org/2005/Atom">
+  <id>http://www.feedbooks.com/books/recent.atom?category=FBFIC028000&amp;lang=en</id>
+  <link type="text/html" href="http://www.feedbooks.com/books/recent?category=FBFIC028000&amp;amp;lang=en" rel="alternate"/>
+  <link type="application/atom+xml" href="http://www.feedbooks.com/books/recent.atom?category=FBFIC028000&amp;lang=en" rel="self"/>
+  <title>Browsing Public Domain Books / New Releases / Science Fiction | Feedbooks</title>
+  <updated>2010-08-08T13:58:19Z</updated>
+  <icon>http://www.feedbooks.com/favicon.ico</icon>
+  <author>
+    <name>Feedbooks</name>
+    <uri>http://www.feedbooks.com</uri>
+    <email>support@feedbooks.com</email>
+  </author>
+  <link type="application/atom+xml" href="/catalog.atom" rel="start" title="OPDS Catalog"/>
+  <link type="application/opensearchdescription+xml" href="/opensearch.xml" rel="search" title="Search on Feedbooks"/>
+  <link type="application/atom+xml" href="https://www.feedbooks.com/user/bookshelf.atom" rel="http://opds-spec.org/shelf" title="Bookshelf"/>
+  <link type="application/atom+xml" href="https://www.feedbooks.com/user/subscriptions.atom" rel="http://opds-spec.org/subscriptions" title="Subscriptions"/>
+  <link type="application/atom+xml" href="http://www.feedbooks.com/books/recent.atom" rel="http://opds-spec.org/sort/new" title="New Public Domain Books"/>
+  <link type="application/atom+xml" href="http://www.feedbooks.com/books/top.atom?range=month" rel="http://opds-spec.org/sort/popular" title="Top Public Domain Books"/>
+  <link type="application/atom+xml" href="http://www.feedbooks.com/userbooks/recent.atom" rel="http://opds-spec.org/sort/new" title="New Original Books"/>
+  <link type="application/atom+xml" href="http://www.feedbooks.com/userbooks/top.atom?range=month" rel="http://opds-spec.org/sort/popular" title="Top Original Books"/>
+<opensearch:totalResults>1132</opensearch:totalResults>
+<opensearch:itemsPerPage>20</opensearch:itemsPerPage>
+<link type="application/atom+xml" href="http://www.feedbooks.com/books/recent.atom?category=FBFIC028000&amp;lang=en&amp;page=2" rel="next" title="Next Page"/>
+<entry>
+<title>Quest of the Golden Ape</title>
+<id>http://www.feedbooks.com/book/4957</id>
+<author>
+  <name>Randall Garrett</name>
+  <uri>http://www.feedbooks.com/author/267</uri>
+</author>
+<author>
+  <name>Stephen Marlowe</name>
+  <uri>http://www.feedbooks.com/author/744</uri>
+</author>
+<updated>2010-06-25T10:36:44Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1957</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>How could this man awaken with no past&#8212;no childhood&#8212;no recollection except of a vague world of terror from which his mother cried out for vengeance and the slaughter of his own people stood as a monument of infamy?</summary>
+<dcterms:extent>33,525 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32953</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4957" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4957.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4957.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4957.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4957.jpg?t=1277462204" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4957.jpg?size=thumbnail&amp;t=1277462204" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4957.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>The Ware Tetralogy</title>
+<id>http://www.feedbooks.com/book/4949</id>
+<author>
+  <name>Rudy Rucker</name>
+  <uri>http://www.feedbooks.com/author/256</uri>
+</author>
+<updated>2010-07-02T10:49:51Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>2010</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<summary>Your Guide to the 21st Century!
+
+It starts with Software, where rebel robots bring immortality to their human creator by eating his brain. Software won the first Philip K. Dick Award.
+
+In Wetware, the robots decide to start building people &#8212;and people get strung out on an insane new drug called merge. This cyberpunk classic garnered a second Philip K. Dick award.
+
+By Freeware, the robots have evolved into soft plastic slugs called moldies &#8212;and some human &#8220;cheeseballs&#8221; want to have sex with them. The action redoubles when aliens begin arriving in the form of cosmic rays.
+
+And with Realware, the humans and robots reach a higher plateau.</summary>
+<dcterms:extent>321,752 words</dcterms:extent>
+<dcterms:source>http://www.rudyrucker.com/wares/</dcterms:source>
+<rights>Attribution Non-Commercial No Derivatives (cc by-nc-nd)</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4949" rel="alternate" title="View on Feedbooks"/>
+<link type="text/html" href="http://creativecommons.org/licenses/by-nc-nd/3.0/" rel="license" title="Creative Commons"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4949.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4949.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4949.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4949.jpg?t=1278067791" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4949.jpg?size=thumbnail&amp;t=1278067791" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4949.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>Cue for Quiet</title>
+<id>http://www.feedbooks.com/book/4946</id>
+<author>
+  <name>Thomas L. Sherred</name>
+  <uri>http://www.feedbooks.com/author/1453</uri>
+</author>
+<updated>2010-06-22T09:35:56Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1953</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>After too many years, T. L. Sherred returns with a story that gets our SPACE SPECIAL rating. It's the story of a man with a headache&#8212;who found a cure for it! And the cure gave him more power than any man could dream of.</summary>
+<dcterms:extent>29,902 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32889</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4946" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4946.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4946.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4946.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4946.jpg?t=1277199356" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4946.jpg?size=thumbnail&amp;t=1277199356" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4946.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>Home is Where You Left It</title>
+<id>http://www.feedbooks.com/book/4945</id>
+<author>
+  <name>Stephen Marlowe</name>
+  <uri>http://www.feedbooks.com/author/744</uri>
+</author>
+<updated>2010-06-22T09:29:58Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1957</dcterms:issued>
+<category label="Fiction" term="FBFIC000000"/>
+<category label="Science Fiction" term="FBFIC028000"/>
+<category label="Short Stories" term="FBFIC029000"/>
+<summary>How black is the blackest treachery? Is the most callous traitor entitled to mercy? Steve pondered these questions. His decision? That at times the villain should possibly be spoken of as a hero.</summary>
+<dcterms:extent>4,297 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32890</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4945" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4945.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4945.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4945.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4945.jpg?t=1277198998" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4945.jpg?size=thumbnail&amp;t=1277198998" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4945.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>The Tree of Life</title>
+<id>http://www.feedbooks.com/book/4944</id>
+<author>
+  <name>Catherine Lucille Moore</name>
+  <uri>http://www.feedbooks.com/author/1452</uri>
+</author>
+<updated>2010-06-22T09:23:03Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1936</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>A gripping tale of the planet Mars and the terrible monstrosity that called its victims to it from afar&#8212;a tale of Northwest Smith.</summary>
+<dcterms:extent>10,944 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32850</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4944" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4944.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4944.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4944.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4944.jpg?t=1277198583" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4944.jpg?size=thumbnail&amp;t=1277198583" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4944.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>Perchance to Dream</title>
+<id>http://www.feedbooks.com/book/4943</id>
+<author>
+  <name>Richard Stockham</name>
+  <uri>http://www.feedbooks.com/author/1386</uri>
+</author>
+<updated>2010-06-21T19:33:03Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1954</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>If you wish to escape, if you would go to faraway places, then go to sleep and dream. For sometimes that is the only way....</summary>
+<dcterms:extent>5,792 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32859</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4943" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4943.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4943.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4943.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4943.jpg?t=1277148783" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4943.jpg?size=thumbnail&amp;t=1277148783" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4943.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>In the Cards</title>
+<id>http://www.feedbooks.com/book/4942</id>
+<author>
+  <name>Alan Cogan</name>
+  <uri>http://www.feedbooks.com/author/1451</uri>
+</author>
+<updated>2010-06-21T19:31:05Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1956</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>It is one thing to safeguard the future ... and something else entirely to see someone you love cry in terror two years from now!</summary>
+<dcterms:extent>6,972 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32853</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4942" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4942.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4942.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4942.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4942.jpg?t=1277148665" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4942.jpg?size=thumbnail&amp;t=1277148665" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4942.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>Circle of Flight</title>
+<id>http://www.feedbooks.com/book/4941</id>
+<author>
+  <name>Richard Stockham</name>
+  <uri>http://www.feedbooks.com/author/1386</uri>
+</author>
+<updated>2010-06-20T16:38:07Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1953</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>Thorus, the vengeful, had determined his way. Aria, the healer, had determined her way. Which determined this classic meeting of the twain.</summary>
+<dcterms:extent>4,240 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32885</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4941" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4941.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4941.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4941.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4941.jpg?t=1277051887" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4941.jpg?size=thumbnail&amp;t=1277051887" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4941.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>Thy Rocks and Rills</title>
+<id>http://www.feedbooks.com/book/4940</id>
+<author>
+  <name>Robert E. Gilbert</name>
+  <uri>http://www.feedbooks.com/author/1198</uri>
+</author>
+<updated>2010-06-20T16:33:27Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1953</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>They were out of place in the Manly Age&#8212;Stonecypher, a man who loved animals; Moe, a bull who hated men. Together, they marched to inevitably similar destinies...</summary>
+<dcterms:extent>10,019 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32878</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4940" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4940.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4940.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4940.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4940.jpg?t=1277051607" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4940.jpg?size=thumbnail&amp;t=1277051607" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4940.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>The Huddlers</title>
+<id>http://www.feedbooks.com/book/4939</id>
+<author>
+  <name>William Campbell Gault</name>
+  <uri>http://www.feedbooks.com/author/1362</uri>
+</author>
+<updated>2010-06-20T16:27:59Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1953</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC027000" label="Romance"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>He was a reporter from Venus with an assignment on Earth. He got his story but, against orders, he fell in love&#8212;and therein lies this story.</summary>
+<dcterms:extent>6,996 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32904</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4939" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4939.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4939.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4939.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4939.jpg?t=1277051279" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4939.jpg?size=thumbnail&amp;t=1277051279" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4939.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>The Victor</title>
+<id>http://www.feedbooks.com/book/4938</id>
+<author>
+  <name>Bryce Walton</name>
+  <uri>http://www.feedbooks.com/author/946</uri>
+</author>
+<updated>2010-06-20T16:24:32Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1953</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>Under the new system of the Managerials, the fight was not for life but for death! And great was the ingenuity of&#8212;The Victor.</summary>
+<dcterms:extent>6,004 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32903</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4938" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4938.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4938.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4938.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4938.jpg?t=1277051072" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4938.jpg?size=thumbnail&amp;t=1277051072" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4938.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>The Merchants of Venus</title>
+<id>http://www.feedbooks.com/book/4937</id>
+<author>
+  <name>A.H. Phelps</name>
+  <uri>http://www.feedbooks.com/author/1450</uri>
+</author>
+<updated>2010-06-20T16:21:41Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1954</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>A pioneer movement is like a building&#8212;the foundation is never built for beauty!</summary>
+<dcterms:extent>5,207 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32901</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4937" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4937.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4937.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4937.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4937.jpg?t=1277050901" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4937.jpg?size=thumbnail&amp;t=1277050901" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4937.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>The Cosmic Deflector</title>
+<id>http://www.feedbooks.com/book/4936</id>
+<author>
+  <name>Stanton A. Coblentz</name>
+  <uri>http://www.feedbooks.com/author/1006</uri>
+</author>
+<updated>2010-06-20T16:18:25Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1943</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>It's one thing to force the Earth out of its orbit, and another to force it back in again!</summary>
+<dcterms:extent>6,995 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32899</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4936" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4936.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4936.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4936.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4936.jpg?t=1277050705" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4936.jpg?size=thumbnail&amp;t=1277050705" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4936.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>Beyond The Thunder</title>
+<id>http://www.feedbooks.com/book/4935</id>
+<author>
+  <name>H.B. Hickey</name>
+  <uri>http://www.feedbooks.com/author/1449</uri>
+</author>
+<updated>2010-06-18T15:09:45Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1948</dcterms:issued>
+<category label="Fiction" term="FBFIC000000"/>
+<category label="Science Fiction" term="FBFIC028000"/>
+<category label="Short Stories" term="FBFIC029000"/>
+<summary>What was this blinding force that came out of a hole in the sky, and was powerful enough to destroy an entire city? Case thought he knew....</summary>
+<dcterms:extent>10,198 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32866</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4935" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4935.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4935.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4935.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4935.jpg?t=1276873785" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4935.jpg?size=thumbnail&amp;t=1276873785" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4935.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>Check and Checkmate</title>
+<id>http://www.feedbooks.com/book/4932</id>
+<author>
+  <name>Walter M. Miller</name>
+  <uri>http://www.feedbooks.com/author/1150</uri>
+</author>
+<updated>2010-06-18T11:35:21Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1953</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>Victory hinges not always on the mightiest sword, but often on lowly subterfuge. Here is a classic example, with the Western World as stooge!</summary>
+<dcterms:extent>9,127 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32837</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4932" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4932.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4932.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4932.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4932.jpg?t=1276860921" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4932.jpg?size=thumbnail&amp;t=1276860921" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4932.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>When the Mountain Shook</title>
+<id>http://www.feedbooks.com/book/4922</id>
+<author>
+  <name>Robert Abernathy</name>
+  <uri>http://www.feedbooks.com/author/1382</uri>
+</author>
+<updated>2010-06-17T14:37:33Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1954</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>Dark was the Ryzga mountain and forbidding; steep were its cliffs and sheer its crevasses. But its outward perils could not compare with the Ryzgas themselves, who slept within, ready to wake and conquer....</summary>
+<dcterms:extent>5,305 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32836</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4922" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4922.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4922.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4922.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4922.jpg?t=1276785453" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4922.jpg?size=thumbnail&amp;t=1276785453" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4922.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>Think Yourself to Death</title>
+<id>http://www.feedbooks.com/book/4919</id>
+<author>
+  <name>Stephen Marlowe</name>
+  <uri>http://www.feedbooks.com/author/744</uri>
+</author>
+<updated>2010-06-17T10:45:54Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1957</dcterms:issued>
+<category label="Fiction" term="FBFIC000000"/>
+<category label="Science Fiction" term="FBFIC028000"/>
+<category label="Short Stories" term="FBFIC029000"/>
+<summary>If you've never read a Johnny Mayhem story before, you are in for a treat. Johnny, who wears different bodies the way ordinary people wear clothes, is one of the most fascinating series characters in science fiction.</summary>
+<dcterms:extent>6,886 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32827</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4919" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4919.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4919.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4919.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4919.jpg?t=1276771554" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4919.jpg?size=thumbnail&amp;t=1276771554" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4919.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>Backlash</title>
+<id>http://www.feedbooks.com/book/4918</id>
+<author>
+  <name>Winston K. Marks</name>
+  <uri>http://www.feedbooks.com/author/437</uri>
+</author>
+<updated>2010-06-17T10:39:05Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1964</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>They were the perfect servants&#8212;they were willing to do everything for nothing. The obvious question is: How much is nothing?</summary>
+<dcterms:extent>9,091 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32828</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4918" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4918.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4918.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4918.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4918.jpg?t=1276771145" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4918.jpg?size=thumbnail&amp;t=1276771145" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4918.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>A Woman's Place</title>
+<id>http://www.feedbooks.com/book/4917</id>
+<author>
+  <name>Mark Irvin Clifton</name>
+  <uri>http://www.feedbooks.com/author/354</uri>
+</author>
+<updated>2010-06-17T10:34:16Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1955</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>Home is where you hang up your spaceship&#8212;that is, if you have any Miss Kitty along!</summary>
+<dcterms:extent>9,404 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32833</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4917" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4917.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4917.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4917.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4917.jpg?t=1276770856" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4917.jpg?size=thumbnail&amp;t=1276770856" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4917.atom" rel="alternate" title="Full entry"/>
+</entry>
+<entry>
+<title>Piper in the Woods</title>
+<id>http://www.feedbooks.com/book/4916</id>
+<author>
+  <name>Philip K. Dick</name>
+  <uri>http://www.feedbooks.com/author/1023</uri>
+</author>
+<updated>2010-06-17T10:28:52Z</updated>
+<dcterms:language>en</dcterms:language>
+<dcterms:issued>1953</dcterms:issued>
+<category term="FBFIC000000" label="Fiction"/>
+<category term="FBFIC028000" label="Science Fiction"/>
+<category term="FBFIC029000" label="Short Stories"/>
+<summary>Earth maintained an important garrison on Asteroid Y-3. Now suddenly it was imperiled with a biological impossibility&#8212;men becoming plants!</summary>
+<dcterms:extent>7,210 words</dcterms:extent>
+<dcterms:source>http://www.gutenberg.org/etext/32832</dcterms:source>
+<rights>Please read the legal notice included in this e-book and/or check the copyright status in your country.</rights>
+<link type="text/html" href="http://www.feedbooks.com/book/4916" rel="alternate" title="View on Feedbooks"/>
+<link type="application/epub+zip" href="http://www.feedbooks.com/book/4916.epub" rel="http://opds-spec.org/acquisition"/>
+<link type="application/x-mobipocket-ebook" href="http://www.feedbooks.com/book/4916.mobi" rel="http://opds-spec.org/acquisition"/>
+<link type="application/pdf" href="http://www.feedbooks.com/book/4916.pdf" rel="http://opds-spec.org/acquisition"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4916.jpg?t=1276770532" rel="http://opds-spec.org/cover"/>
+<link type="image/jpeg" href="http://covers.feedbooks.net/book/4916.jpg?size=thumbnail&amp;t=1276770532" rel="http://opds-spec.org/thumbnail"/>
+<link type="application/atom+xml;type=entry" href="http://www.feedbooks.com/book/4916.atom" rel="alternate" title="Full entry"/>
+</entry>
+</feed>
