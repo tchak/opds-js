@@ -3,8 +3,8 @@ $(function(){
   OPDS.access('http://www.feedbooks.com/catalog.atom', function(catalog){
     console.log(catalog)
     console.log(catalog.title);
-    console.log(catalog.links.size());
-    catalog.links.each(function(link){
+    console.log(catalog.links.length);
+    _.each(catalog.links, function(link){
       console.log(link.rel);
       if (link.rel == 'http://opds-spec.org/sort/new'){
         console.log('=====================');

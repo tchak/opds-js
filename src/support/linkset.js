@@ -30,11 +30,13 @@ OPDS.Support.Link = _.Class({
 OPDS.Support.LinkSet = _.Class({
   initialize: function(browser){
 	  this.browser = browser || new OPDS.Support.Browser();
-		this.store = [];
-		this.store.rel_store = {};
-		this.store.txt_store = {};
-		this.store.lnk_store = {};
-		this.store.typ_store = {};
+	  this.length = 0;
+		this.store = {
+		  rel_store: {},
+		  txt_store: {},
+		  lnk_store: {},
+		  typ_store: {}
+		};
 	},
 
   extend: {
@@ -62,8 +64,8 @@ OPDS.Support.LinkSet = _.Class({
   set: function(key, value){
 	  var link = new OPDS.Support.Link([key].concat(value), this.browser);
 	  var s = this.store;
-		s.push(link);
-		var i = s.length - 1;
+		var i = this.length;
+		Array.prototype.push.apply(this, [link]);
 		// Rels
 		if (!s.rel_store[key]){
 		  s.rel_store[key] = [];
@@ -88,11 +90,6 @@ OPDS.Support.LinkSet = _.Class({
 
 	get: function(key){
     return this.__remap(this.store.rel_store[key]);
-	},
-
-  each: function(callback){
-	  _.each(this.store, callback);
-	  return this;
 	},
 
 	push: function(rel, link, text, type){
@@ -123,10 +120,6 @@ OPDS.Support.LinkSet = _.Class({
     // t.first[3] unless t.nil?
 	},
 
-	size: function(){
-	  return this.store.length;
-	},
-
   by: function(type){
     var hash = {};
     _.each(this.__collection(type), function(value, key){
@@ -152,11 +145,11 @@ OPDS.Support.LinkSet = _.Class({
 	},
 
 	first: function(){ 
-	  return _.first(this.store);
+	  return _.first(this);
 	},
 			
   last: function(){
-		return _.last(this.store);
+		return _.last(this);
 	},
  
 	__collection: function(type){
@@ -173,7 +166,7 @@ OPDS.Support.LinkSet = _.Class({
 	    return null;
 	  }
 	  return _.map(tab, function(value){
-	    return this.store[value];
+	    return this[value];
 	  }, this);
   }
 });

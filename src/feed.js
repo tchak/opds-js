@@ -16,15 +16,16 @@ OPDS.Feed = _.Class({
         if (browser.isOk()) {
           var parsed = self.parseRaw(browser.body(), opts, browser);
           if (parsed == null) {
-            var disco = browser.discover(browser.currentLocation);
-            if (disco.size > 0) {
-              var d = disco[nil]
-              // d||=disco['related']
-              // d||=disco
-              // console.log("Discovered : #{d.first.url}")
-              // _.first(d).navigate();
-            }
-            callback.call(browser, false);
+            var disco = browser.discover(browser.currentLocation, function(){
+              if (disco.size > 0) {
+                var d = disco.get('related');
+                if (d && d.length > 0){
+                  //console.log("Discovered : #{d.first.url}")
+                  _.first(d).navigate(callback);
+                }
+              }
+              callback.call(browser, false);
+            });
           } else {
             callback.call(browser, parsed);
           }
