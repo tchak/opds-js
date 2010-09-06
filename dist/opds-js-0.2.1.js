@@ -1,4 +1,4 @@
-/*  opds-js JavaScript library, version 0.2.0
+/*  opds-js JavaScript library, version 0.2.1
  *  (c) 2010 Paul Chavard
  *
  *  Released under MIT license.
@@ -68,247 +68,6 @@ OPDS.Parser = _.Class({
 		}
 	}
 });
-
-
-// // //
-// Entry
-//
-OPDS.Entry = _.Class({
-	initialize: function(browser){
-		this.browser = browser || new OPDS.Support.Browser();
-		this.rawDoc = null;
-	},
-
-	extend: {
-		fromJQuery: function(content, browser){
-		  var z = new OPDS.Entry(browser);
-		  z.rawDoc = content;
-			z.serialize();
-			return z;
-		}
-	},
-
-	serialize: function(){
-    // Get full entry element from document
-		if (this.rawDoc.find('entry').length == 1){
-		  this.rawDoc = this.rawDoc.find('entry');
-		}
-		// Title
-		this.title = this.rawDoc.find('title').text() || null;
-		// Id
-		this.id = this.rawDoc.find('id').text() || null;
-		// Summary
-		this.summary = this.rawDoc.find('summary').text() || null;
-		// Content
-    this.content = this.rawDoc.find('content').text() || null;
-    // Rights
-    this.rights = this.rawDoc.find('rights').text() || null;
-    // Subtitle
-    this.subtitle = this.rawDoc.find('subtitle').text() || null;
-		// Updated
-		var d = this.rawDoc.find('updated').text();
-		try {
-		  this.updated = Date.parse(d);
-		} catch (e) {
-		  this.updated = null;
-		}
-		// Published
-		d = this.rawDoc.find('published').text();
-		try {
-		  this.published = Date.parse(d);
-		} catch (e) {
-		  this.published = null;
-		}
-    // Authors
-    this.authors = _(this.rawDoc.find('author')).chain().toArray().map(function(auth){
-     return {
-       name: this.rawDoc.find('author>name', auth).text(),
-       uri: this.rawDoc.find('author>uri', auth).text(),
-       email: this.rawDoc.find('author>email', auth).text()
-     };
-    }, this).value();
-    // Author
-		this.author =  _.first(this.authors);
-		// Contributors
-    this.contributors = _(this.rawDoc.find('contributor')).chain().toArray().map(function(auth){
-     return {
-       name: this.rawDoc.find('contributor>name', auth).text(),
-       uri: this.rawDoc.find('contributor>uri', auth).text(),
-       email: this.rawDoc.find('contributor>email', auth).text()
-     };
-    }, this).value();
-    // Links
-    OPDS.Support.LinkSet.extract(this, 'link');
-    // Categories
-    this.categories = this.rawDoc.find('category').map(function(i, n){
-      return [$(n).attr('label'), $(n).attr('term')];
-    });
-    // DC Metas
-    this.dcmetas = {};
-    // dcmetas=Hash.new
-    // prefs=@namespaces.reject{|_,v| !%W[http://purl.org/dc/terms/ http://purl.org/dc/elements/1.1/].include?v}
-    // prefs.keys.map{|p| p.split(':').last}.each do |pref|
-    //   raw_doc.xpath('./'+pref+':*',@namespaces).each do |n|
-    //      @dcmetas[n.name]=[] unless  @dcmetas[n.name]
-    //      @dcmetas[n.name].push [n.text, n]
-    //    end
-    //  end
-  },
-
-  acquisitionLinks: function(){
-    var relStart = /^http:\/\/opds-spec.org\/acquisition/;
-    return _(this.links.by('rel')).chain().reject(function(l, key){
-      return !key.match(relStart);
-    }).flatten().value();
-	},
-
-	isPartial: function(){
-		return _.any(this.links.by('rel')['alternate'], function(l){
-			return l.type == 'application/atom+xml' || l.type == 'application/atom+xml;type=entry';
-		});
-	},
-
-  completeLink: function(){
-    if (this.isPartial()){
-		  return _.detect(this.links.by('rel')['alternate'], function(l){
-			  return l.type == 'application/atom+xml;type=entry' || l.type == 'application/atom+xml';
-		  });
-		}
-		return null;
-  },
-
-	completeUrl: function(){
-	  if (this.completeLink()){
-	    return this.completeLink().url;
-		}
-		return null;
-	},
-	
-	complete: function(callback){
-    if (this.completeLink()){
-      return this.completeLink().navigate(callback);
-    }
-    return null;
-  },
-
-  inspect: function(){
-    
-	}
-});
-
-
-// // //
-// Feed
-//
-OPDS.Feed = _.Class({
-  initialize: function(browser){
-    this.browser = browser || new OPDS.Support.Browser();
-    this.rawDoc = null;
-  },
-  
-  extend: {
-    parseUrl: function(url, callback, browser, opts){
-      var browser = browser || new OPDS.Support.Browser();
-      var self = this;
-      browser.goTo(url, function(browser){
-        if (browser.isOk()) {
-          var parsed = self.parseRaw(browser.body(), opts, browser);
-          if (parsed == null) {
-            var disco = browser.discover(browser.currentLocation, function(){
-              if (disco.size > 0) {
-                var d = disco.get('related');
-                if (d && d.length > 0){
-                  //console.log("Discovered : #{d.first.url}")
-                  _.first(d).navigate(callback);
-                }
-              }
-              callback.call(browser, false);
-            });
-          } else {
-            callback.call(browser, parsed);
-          }
-        } else {
-          callback.call(browser, false);
-        }
-      });
-    },
-
-    parseRaw: function(txt, opts, browser){
-      var parser = new OPDS.Parser(opts);
-      return parser.parse(txt, browser);
-    },
-
-    fromJQuery: function(content, browser){
-      var z = new OPDS.Feed(browser);
-      z.rawDoc = content;
-      z.serialize();
-      return z;
-    }
-  },
-
-  // read xml entries into entry struct
-  serialize: function(){
-    // Id
-    this.id = this.rawDoc.find('feed>id').text();
-    // Icon
-    this.icon = this.rawDoc.find('feed>icon').text();
-    // Title
-    this.title = this.rawDoc.find('feed>title').text();
-    // Author
-    this.author = {
-      name: this.rawDoc.find('feed>author>name').text(),
-      uri: this.rawDoc.find('feed>author>uri').text(),
-      email: this.rawDoc.find('feed>author>email').text()
-    };
-    // Entries
-    this.entries = _(this.rawDoc.find('feed>entry')).chain().toArray().map(function(el){
-      return OPDS.Entry.fromJQuery($(el), this.browser);
-    }, this).value();
-    // Links
-    OPDS.Support.LinkSet.extract(this, 'feed>link');
-  },
-
-  nextPageUrl: function(){
-    //return links.linkUrl('rel' => 'next');
-  },
-
-  prevPageUrl: function(){
-    //return links.linkUrl('rel' => 'prev');
-  },
-
-  isPaginated: function(){
-    //!next_page_url.nil?||!prev_page_url.nil?
-  },
-
-  isFirstPage: function(){
-    return this.isPaginated() ? !this.prevPageUrl() : false;
-  },
-
-  isLastPage: function(){
-    return this.isPaginated() ? !this.nextPageUrl() : false;
-  },
-
-  nextPage: function(){
-    return Feed.parseUrl(this.nextPageUrl(), this.browser);
-  },
-
-  prevPage: function(){
-    return Feed.parseUrl(this.prevPageUrl(), this.browser);
-  },
-
-  inspect: function(){
-  }
-});
-
-// // //
-// NavigationFeed
-//
-OPDS.NavigationFeed = _.Class(OPDS.Feed, {});
-
-// // //
-// AcquisitionFeed
-//
-OPDS.AcquisitionFeed = _.Class(OPDS.Feed, {});
 
 
 // // //
@@ -544,4 +303,245 @@ OPDS.Support.LinkSet = _.Class({
 	    return this[value];
 	  }, this);
   }
+});
+
+
+// // //
+// Feed
+//
+OPDS.Feed = _.Class({
+  initialize: function(browser){
+    this.browser = browser || new OPDS.Support.Browser();
+    this.rawDoc = null;
+  },
+  
+  extend: {
+    parseUrl: function(url, callback, browser, opts){
+      var browser = browser || new OPDS.Support.Browser();
+      var self = this;
+      browser.goTo(url, function(browser){
+        if (browser.isOk()) {
+          var parsed = self.parseRaw(browser.body(), opts, browser);
+          if (parsed == null) {
+            var disco = browser.discover(browser.currentLocation, function(){
+              if (disco.size > 0) {
+                var d = disco.get('related');
+                if (d && d.length > 0){
+                  //console.log("Discovered : #{d.first.url}")
+                  _.first(d).navigate(callback);
+                }
+              }
+              callback.call(browser, false);
+            });
+          } else {
+            callback.call(browser, parsed);
+          }
+        } else {
+          callback.call(browser, false);
+        }
+      });
+    },
+
+    parseRaw: function(txt, opts, browser){
+      var parser = new OPDS.Parser(opts);
+      return parser.parse(txt, browser);
+    },
+
+    fromJQuery: function(content, browser){
+      var z = new OPDS.Feed(browser);
+      z.rawDoc = content;
+      z.serialize();
+      return z;
+    }
+  },
+
+  // read xml entries into entry struct
+  serialize: function(){
+    // Id
+    this.id = this.rawDoc.find('feed>id').text();
+    // Icon
+    this.icon = this.rawDoc.find('feed>icon').text();
+    // Title
+    this.title = this.rawDoc.find('feed>title').text();
+    // Author
+    this.author = {
+      name: this.rawDoc.find('feed>author>name').text(),
+      uri: this.rawDoc.find('feed>author>uri').text(),
+      email: this.rawDoc.find('feed>author>email').text()
+    };
+    // Entries
+    this.entries = _(this.rawDoc.find('feed>entry')).chain().toArray().map(function(el){
+      return OPDS.Entry.fromJQuery($(el), this.browser);
+    }, this).value();
+    // Links
+    OPDS.Support.LinkSet.extract(this, 'feed>link');
+  },
+
+  nextPageUrl: function(){
+    //return links.linkUrl('rel' => 'next');
+  },
+
+  prevPageUrl: function(){
+    //return links.linkUrl('rel' => 'prev');
+  },
+
+  isPaginated: function(){
+    //!next_page_url.nil?||!prev_page_url.nil?
+  },
+
+  isFirstPage: function(){
+    return this.isPaginated() ? !this.prevPageUrl() : false;
+  },
+
+  isLastPage: function(){
+    return this.isPaginated() ? !this.nextPageUrl() : false;
+  },
+
+  nextPage: function(){
+    return Feed.parseUrl(this.nextPageUrl(), this.browser);
+  },
+
+  prevPage: function(){
+    return Feed.parseUrl(this.prevPageUrl(), this.browser);
+  },
+
+  inspect: function(){
+  }
+});
+
+// // //
+// NavigationFeed
+//
+OPDS.NavigationFeed = _.Class(OPDS.Feed, {});
+
+// // //
+// AcquisitionFeed
+//
+OPDS.AcquisitionFeed = _.Class(OPDS.Feed, {});
+
+
+// // //
+// Entry
+//
+OPDS.Entry = _.Class({
+	initialize: function(browser){
+		this.browser = browser || new OPDS.Support.Browser();
+		this.rawDoc = null;
+	},
+
+	extend: {
+		fromJQuery: function(content, browser){
+		  var z = new OPDS.Entry(browser);
+		  z.rawDoc = content;
+			z.serialize();
+			return z;
+		}
+	},
+
+	serialize: function(){
+    // Get full entry element from document
+		if (this.rawDoc.find('entry').length == 1){
+		  this.rawDoc = this.rawDoc.find('entry');
+		}
+		// Title
+		this.title = this.rawDoc.find('title').text() || null;
+		// Id
+		this.id = this.rawDoc.find('id').text() || null;
+		// Summary
+		this.summary = this.rawDoc.find('summary').text() || null;
+		// Content
+    this.content = this.rawDoc.find('content').text() || null;
+    // Rights
+    this.rights = this.rawDoc.find('rights').text() || null;
+    // Subtitle
+    this.subtitle = this.rawDoc.find('subtitle').text() || null;
+		// Updated
+		var d = this.rawDoc.find('updated').text();
+		try {
+		  this.updated = Date.parse(d);
+		} catch (e) {
+		  this.updated = null;
+		}
+		// Published
+		d = this.rawDoc.find('published').text();
+		try {
+		  this.published = Date.parse(d);
+		} catch (e) {
+		  this.published = null;
+		}
+    // Authors
+    this.authors = _(this.rawDoc.find('author')).chain().toArray().map(function(auth){
+     return {
+       name: this.rawDoc.find('author>name', auth).text(),
+       uri: this.rawDoc.find('author>uri', auth).text(),
+       email: this.rawDoc.find('author>email', auth).text()
+     };
+    }, this).value();
+    // Author
+		this.author =  _.first(this.authors);
+		// Contributors
+    this.contributors = _(this.rawDoc.find('contributor')).chain().toArray().map(function(auth){
+     return {
+       name: this.rawDoc.find('contributor>name', auth).text(),
+       uri: this.rawDoc.find('contributor>uri', auth).text(),
+       email: this.rawDoc.find('contributor>email', auth).text()
+     };
+    }, this).value();
+    // Links
+    OPDS.Support.LinkSet.extract(this, 'link');
+    // Categories
+    this.categories = this.rawDoc.find('category').map(function(i, n){
+      return [$(n).attr('label'), $(n).attr('term')];
+    });
+    // DC Metas
+    this.dcmetas = {};
+    // dcmetas=Hash.new
+    // prefs=@namespaces.reject{|_,v| !%W[http://purl.org/dc/terms/ http://purl.org/dc/elements/1.1/].include?v}
+    // prefs.keys.map{|p| p.split(':').last}.each do |pref|
+    //   raw_doc.xpath('./'+pref+':*',@namespaces).each do |n|
+    //      @dcmetas[n.name]=[] unless  @dcmetas[n.name]
+    //      @dcmetas[n.name].push [n.text, n]
+    //    end
+    //  end
+  },
+
+  acquisitionLinks: function(){
+    var relStart = /^http:\/\/opds-spec.org\/acquisition/;
+    return _(this.links.by('rel')).chain().reject(function(l, key){
+      return !key.match(relStart);
+    }).flatten().value();
+	},
+
+	isPartial: function(){
+		return _.any(this.links.by('rel')['alternate'], function(l){
+			return l.type == 'application/atom+xml' || l.type == 'application/atom+xml;type=entry';
+		});
+	},
+
+  completeLink: function(){
+    if (this.isPartial()){
+		  return _.detect(this.links.by('rel')['alternate'], function(l){
+			  return l.type == 'application/atom+xml;type=entry' || l.type == 'application/atom+xml';
+		  });
+		}
+		return null;
+  },
+
+	completeUrl: function(){
+	  if (this.completeLink()){
+	    return this.completeLink().url;
+		}
+		return null;
+	},
+	
+	complete: function(callback){
+    if (this.completeLink()){
+      return this.completeLink().navigate(callback);
+    }
+    return null;
+  },
+
+  inspect: function(){
+    
+	}
 });

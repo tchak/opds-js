@@ -1,0 +1,11 @@
+--- 
+name: "opds-js"
+version: "0.2.1"
+files:
+  js:
+    - opds
+    - parser
+    - support/browser
+    - support/linkset
+    - feed
+    - entry
