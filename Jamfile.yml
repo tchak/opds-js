@@ -1,0 +1,15 @@
+---
+name: "opds"
+version: "0.3.0"
+require:
+  - jquery 1.4.2
+  - underscore.class
+  - URI
+package:
+  js:
+    - opds
+    - parser
+    - support/browser
+    - support/linkset
+    - feed
+    - entry
