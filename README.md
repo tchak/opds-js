@@ -8,7 +8,7 @@ It also has the ability to discover catalogs in html feeds.
 Dependencies
 ------------
 
-  - [jquery](http;//jquery.com)
+  - [jquery](http://jquery.com)
   - [underscore](http://documentcloud.github.com/underscore/)
   - [classy](http://classy.pocoo.org/)
   - [URI](http://github.com/tchak/URI)
