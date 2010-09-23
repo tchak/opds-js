@@ -8,21 +8,30 @@ OPDS.Support.Browser = Class.$extend({
 		var browser = this;
 		this.lastResponse = null;
 		this.currentLocation = url;
-		if (jQuery.browser.msie && window.XDomainRequest) {
-      // Use Microsoft XDR
-      var xdr = new XDomainRequest();
-      xdr.open("get", url);
-      xdr.onload = function(){
-        browser.lastResponse = this;
-        browser.lastResponse.status = 200;
-        callback.apply(browser, [browser]);
-      };
-      xdr.send();
-    } else {
+		try {
 		  $.get(url, function(data, status, response){
 		    browser.lastResponse = response;
 		    callback.apply(browser, [browser]);
 		  });
+		} catch (e) {
+		  if (jQuery.browser.msie && window.XDomainRequest) {
+        // Use Microsoft XDR
+        var xdr = new XDomainRequest();
+        xdr.open("get", url);
+        xdr.onload = function(){
+          browser.lastResponse = this;
+          browser.lastResponse.status = 200;
+          callback.apply(browser, [browser]);
+        };
+        xdr.onerror = function(){
+          browser.lastResponse = this;
+          browser.lastResponse.status = -1;
+          callback.apply(browser, [browser]);
+        }
+        xdr.send();
+      } else {
+        alert("Your browser is unable to load crossdomain requests!");
+		  }
 		}
 	},
   
