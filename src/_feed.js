@@ -36,7 +36,6 @@ OPDS.Feed = Class.$extend({
               if (disco.size > 0) {
                 var d = disco.get('related');
                 if (d && d.length > 0){
-                  //console.log("Discovered : #{d.first.url}")
                   _.first(d).navigate(callback);
                 }
               }

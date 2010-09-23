@@ -64,27 +64,24 @@ OPDS.Parser = Class.$extend({
 
 OPDS.Support.Browser = Class.$extend({
 	goTo: function(uri, callback){
-		var url = new URI(uri).toString();
+		var url = new URI(uri).str();
 		var browser = this;
 		this.lastResponse = null;
 		this.currentLocation = url;
-    try {
+		if (jQuery.browser.msie && window.XDomainRequest) {
+      var xdr = new XDomainRequest();
+      xdr.open("get", url);
+      xdr.onload = function(){
+        browser.lastResponse = this;
+        browser.lastResponse.status = 200;
+        callback.apply(browser, [browser]);
+      };
+      xdr.send();
+    } else {
 		  $.get(url, function(data, status, response){
 		    browser.lastResponse = response;
 		    callback.apply(browser, [browser]);
 		  });
-		} catch (e) {
-		  if (jQuery.browser.msie && window.XDomainRequest) {
-        var xdr = new XDomainRequest();
-        xdr.open("get", url);
-        xdr.onload = function(){
-          browser.lastResponse = this;
-          callback.apply(browser, [browser]);
-        };
-        xdr.send();
-      } else {
-        console.log("An error occured or your browser is to old for this...");
-      }
 		}
 	},
 
@@ -124,7 +121,7 @@ OPDS.Support.Link = Class.$extend({
   __init__: function(array, browser){
 	  this.browser = browser || new OPDS.Support.Browser();
 	  if (this.browser.currentLocation){
-		  array[1] = URI.join(this.browser.currentLocation, array[1]).toString();
+		  array[1] = URI.join(this.browser.currentLocation, array[1]).str();
 		}
 		this.rel = array[0] || null;
 		this.url = array[1] || null;
@@ -147,10 +144,10 @@ OPDS.Support.LinkSet = Class.$extend({
 	  this.browser = browser || new OPDS.Support.Browser();
 	  this.length = 0;
 		this.store = {
-		  rel_store: {},
-		  txt_store: {},
-		  lnk_store: {},
-		  typ_store: {}
+		  rel: {},
+		  txt: {},
+		  link: {},
+		  type: {}
 		};
 	},
 
@@ -178,29 +175,28 @@ OPDS.Support.LinkSet = Class.$extend({
 
   set: function(key, value){
 	  var link = new OPDS.Support.Link([key].concat(value), this.browser);
-	  var s = this.store;
-		var i = this.length;
+	  var s = this.store, i = this.length;
 		Array.prototype.push.apply(this, [link]);
-		if (!s.rel_store[key]){
-		  s.rel_store[key] = [];
+		if (!s.rel[key]){
+		  s.rel[key] = [];
 		}
-		s.rel_store[key].push(i);
-		if (!s.txt_store[value[1]]){
-		  s.txt_store[value[1]] = [];
+		s.rel[key].push(i);
+		if (!s.txt[value[1]]){
+		  s.txt[value[1]] = [];
 		}
-		s.txt_store[value[1]].push(i)
-		if (!s.lnk_store[_.first(value)]){
-		  s.lnk_store[_.first(value)] = [];
+		s.txt[value[1]].push(i)
+		if (!s.link[_.first(value)]){
+		  s.link[_.first(value)] = [];
 		}
-		s.lnk_store[_.first(value)].push(i);
-		if (!s.typ_store[_.last(value)]){
-		  s.typ_store[_.last(value)] = [];
+		s.link[_.first(value)].push(i);
+		if (!s.type[_.last(value)]){
+		  s.type[_.last(value)] = [];
 		}
-		s.typ_store[_.last(value)].push(i)
+		s.type[_.last(value)].push(i)
 	},
 
 	get: function(key){
-    return this.__remap(this.store.rel_store[key]);
+    return this.__remap(this.store.rel[key]);
 	},
 
 	push: function(rel, link, text, type){
@@ -221,22 +217,22 @@ OPDS.Support.LinkSet = Class.$extend({
 
   by: function(type){
     var hash = {};
-    _.each(this.__collection(type), function(value, key){
+    _.each(this.store[type], function(value, key){
       return hash[key] = this.__remap(value);
     }, this);
     return hash;
   },
 
 	links: function(){
-		return _.keys(this.store.lnk_store);
+		return _.keys(this.store.link);
 	},
 
 	rels: function(){
-		return _.keys(this.store.rel_store);
+		return _.keys(this.store.rel);
 	},
 
 	texts: function(){
-		return _.keys(this.store.txt_store);
+		return _.keys(this.store.txt);
 	},
 
 	inspect: function(){
@@ -250,15 +246,6 @@ OPDS.Support.LinkSet = Class.$extend({
   last: function(){
 		return _.last(this);
 	},
-
-	__collection: function(type){
-		switch (type){
-		case 'link': return this.store.lnk_store;
-		case 'rel': return this.store.rel_store;
-		case 'txt': return this.store.txt_store;
-		case 'type': return this.store.typ_store;
-	  }
-  },
 
 	__remap: function(tab){
 	  if (!tab || tab.length == 0){

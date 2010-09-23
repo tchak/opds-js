@@ -1,26 +1,21 @@
 $(function(){
-  //var catalog = OPDS.access('./samples/navigation.txt');
   OPDS.access('http://www.feedbooks.com/catalog.atom', function(catalog){
-    console.log(catalog)
-    console.log(catalog.title);
-    console.log(catalog.links.length);
+    $('#start').append('<h1>'+catalog.title+' ('+catalog.links.length+')</h1>');
     _.each(catalog.links, function(link){
-      console.log(link.rel);
       if (link.rel == 'http://opds-spec.org/sort/new'){
-        console.log('=====================');
         link.navigate(function(feed){
-          console.log(feed.title);
-          _.each(feed.entries, function(entry){
-            console.log(entry.title);
-            //console.log(entry.isPartial());
-          });
+          $('#start').append('<hr/>');
+          $('#start').append('<h3>'+feed.title+'</h3>');
           _.first(feed.entries).complete(function(entry){
-            console.log(entry.title);
-            console.log(entry.summary);
-            console.log(entry.acquisitionLinks().length);
+            $('#start').append('<hr/>');
+            $('#start').append('<h4>'+entry.title+' ('+entry.acquisitionLinks().length+')</h4>');
+            $('#start').append('<div>'+entry.summary+'</div>');
+          });
+          $('#start').append('<ul></ul>');
+          _.each(feed.entries, function(entry){
+            $('#start ul').append('<li>'+entry.title+'</li>');
           });
         });
-        console.log('=====================');
       }
     });
   });
