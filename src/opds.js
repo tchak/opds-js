@@ -1,3 +1,8 @@
+//= require "parser"
+//= require "support/browser"
+//= require "support/linkset"
+//= require "feed"
+//= require "entry"
 
 // // //
 // OPDS
