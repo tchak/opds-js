@@ -8,10 +8,10 @@ It also has the ability to discover catalogs in html feeds.
 Dependencies
 ------------
 
-  - jquery
-  - underscore
-  - underscore.class
-  - URI (http://github.com/tchak/URI)
+  - [jquery](http;//jquery.com)
+  - [underscore](http://documentcloud.github.com/underscore/)
+  - [classy](http://classy.pocoo.org/)
+  - [URI](http://github.com/tchak/URI)
 
 Install
 -----------
@@ -30,7 +30,7 @@ Or you can use standalone version which embed all required libraries do
 Usage
 -----
 
-Parsing a feed is simply done. 
+Parsing a feed is done via OPDS.Feed.parseUrl method. 
 
 	OPDS.Feed.parseUrl("http://catalog.com/catalog.atom", callback);
 
