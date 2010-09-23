@@ -17,15 +17,15 @@ Install
 -----------
 Distribution files  are located here :
 
-  http://github.com/tchak/opds-js/tree/master/build/
+	http://github.com/tchak/opds-js/tree/master/build/
 
 If you provide yourself all of the required libraries juste do
   
-  <script type="text/javascript" src="opds.js"></script>
+	<script type="text/javascript" src="opds.js"></script>
 
 Or you can use standalone version which embed all required libraries do
 
-  <script type="text/javascript" src="opds.standalone.js"></script>
+	<script type="text/javascript" src="opds.standalone.js"></script>
 
 Usage
 -----
