@@ -3,13 +3,13 @@
  * all the parsing
  * @abstract Not really abstract as it's full fledged, but it should not be used directly
  */
-OPDS.Feed = _.Class({
-  initialize: function(browser){
+OPDS.Feed = Class.$extend({
+  __init__: function(browser){
     this.browser = browser || new OPDS.Support.Browser();
     this.rawDoc = null;
   },
   
-  extend: {
+  __classvars__: {
     /**
      * Parse the given url.
      *
@@ -136,7 +136,7 @@ OPDS.Feed = _.Class({
  * Represents a navigation feed 
  * @see http://opds-spec.org/specs/opds-catalog-1-0-20100830/#Navigation_Feeds
  */
-OPDS.NavigationFeed = _.Class(OPDS.Feed, {
+OPDS.NavigationFeed = OPDS.Feed.$extend({
   /**
    * Collection of all Navigation feeds found in this feed
    * @return [OPDS::Support::LinkSet] found links
@@ -150,4 +150,4 @@ OPDS.NavigationFeed = _.Class(OPDS.Feed, {
  * Represents an acquisition feed
  * @see http://opds-spec.org/specs/opds-catalog-1-0-20100830/#Acquisition_Feeds
  */
-OPDS.AcquisitionFeed = _.Class(OPDS.Feed, {});
+OPDS.AcquisitionFeed = OPDS.Feed.$extend({});

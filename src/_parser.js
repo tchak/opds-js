@@ -2,7 +2,7 @@
 // // //
 // Parser
 //
-OPDS.Parser = _.Class({
+OPDS.Parser = Class.$extend({
 	initialize: function(opts){
 		this.sniffedType = null;
 		this.options = _.extend({}, opts);

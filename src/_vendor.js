@@ -1,3 +1,4 @@
 //= require <jquery>
-//= require <underscore.class>
+//= require <underscore>
+//= require <classy>
 //= require <URI>

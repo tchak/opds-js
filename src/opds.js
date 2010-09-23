@@ -1,8 +1,4 @@
-//= require "parser"
-//= require "support/browser"
-//= require "support/linkset"
-//= require "feed"
-//= require "entry"
+//= require "vendor"
 
 // // //
 // OPDS
@@ -13,3 +9,9 @@ var OPDS = {
     return OPDS.Feed.parseUrl(feed, callback);
   }
 };
+
+//= require "parser"
+//= require "support/browser"
+//= require "support/linkset"
+//= require "feed"
+//= require "entry"

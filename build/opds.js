@@ -1,6 +1,8 @@
-// // //
-// OPDS
-//
+//= require <jquery>
+//= require <underscore>
+//= require <classy>
+//= require <URI>
+
 var OPDS = {
   Support: {},
   access: function(feed, callback){
@@ -9,10 +11,7 @@ var OPDS = {
 };
 
 
-// // //
-// Parser
-//
-OPDS.Parser = _.Class({
+OPDS.Parser = Class.$extend({
 	initialize: function(opts){
 		this.sniffedType = null;
 		this.options = _.extend({}, opts);
@@ -63,11 +62,7 @@ OPDS.Parser = _.Class({
 	}
 });
 
-
-// // //
-// Browser
-//
-OPDS.Support.Browser = _.Class({
+OPDS.Support.Browser = Class.$extend({
 	goTo: function(uri, callback){
 		var url = new URI(uri).toString();
 		var browser = this;
@@ -80,7 +75,6 @@ OPDS.Support.Browser = _.Class({
 		  });
 		} catch (e) {
 		  if (jQuery.browser.msie && window.XDomainRequest) {
-        // Use Microsoft XDR
         var xdr = new XDomainRequest();
         xdr.open("get", url);
         xdr.onload = function(){
@@ -93,23 +87,23 @@ OPDS.Support.Browser = _.Class({
       }
 		}
 	},
-  
+
 	isOk: function(){
 	  return this.status() == 200;
 	},
-  
+
 	status: function(){
 	  return this.lastResponse ? this.lastResponse.status : null;
 	},
-  
+
   headers: function(){
    return this.lastResponse ? this.lastResponse.getAllResponseHeaders() : null;
   },
-  
+
 	body: function(){
 		return this.lastResponse ? this.lastResponse.responseText: null;
 	},
-  
+
 	discover: function(url, callback){
 	  this.goTo(url, function(browser){
 	    if (browser.isOk()){
@@ -126,12 +120,8 @@ OPDS.Support.Browser = _.Class({
   }
 });
 
-
-// // //
-//  Link
-//
-OPDS.Support.Link = _.Class({
-  initialize: function(array, browser){
+OPDS.Support.Link = Class.$extend({
+  __init__: function(array, browser){
 	  this.browser = browser || new OPDS.Support.Browser();
 	  if (this.browser.currentLocation){
 		  array[1] = URI.join(this.browser.currentLocation, array[1]).toString();
@@ -152,11 +142,8 @@ OPDS.Support.Link = _.Class({
   }
 });
 
-// // //
-//  LinkSet
-//
-OPDS.Support.LinkSet = _.Class({
-  initialize: function(browser){
+OPDS.Support.LinkSet = Class.$extend({
+  __init__: function(browser){
 	  this.browser = browser || new OPDS.Support.Browser();
 	  this.length = 0;
 		this.store = {
@@ -167,7 +154,7 @@ OPDS.Support.LinkSet = _.Class({
 		};
 	},
 
-  extend: {
+  __classvars__: {
     extract: function(element, expr){
       element.links = new OPDS.Support.LinkSet(element.browser);
       element.rawDoc.find(expr).each(function(i, n){
@@ -194,22 +181,18 @@ OPDS.Support.LinkSet = _.Class({
 	  var s = this.store;
 		var i = this.length;
 		Array.prototype.push.apply(this, [link]);
-		// Rels
 		if (!s.rel_store[key]){
 		  s.rel_store[key] = [];
 		}
 		s.rel_store[key].push(i);
-		// Textes
 		if (!s.txt_store[value[1]]){
 		  s.txt_store[value[1]] = [];
 		}
 		s.txt_store[value[1]].push(i)
-		// Links
 		if (!s.lnk_store[_.first(value)]){
 		  s.lnk_store[_.first(value)] = [];
 		}
 		s.lnk_store[_.first(value)].push(i);
-		// Types
 		if (!s.typ_store[_.last(value)]){
 		  s.typ_store[_.last(value)] = [];
 		}
@@ -225,27 +208,15 @@ OPDS.Support.LinkSet = _.Class({
 	},
 
 	linkUrl: function(k){
-    // var ty,v=k.first
-    // t=this.__remap(this.__collection(ty)[v])
-    // t.first[1] unless t.nil?
   },
-			
+
 	linkRel: function(k){
-    //    ty,v=k.first
-    // t=this.__remap(this.__collection(ty)[v])
-    // t.first[0] unless t.nil?
 	},
 
 	linkText: function(k){
-    // ty,v=k.first
-    // t=this.__remap(this.__collection(ty)[v])
-    // t.first[2] unless t.nil?
 	},
-			
+
 	linkType: function(k){
-    // ty,v=k.first
-    // t=this.__remap(this.__collection(ty)[v])
-    // t.first[3] unless t.nil?
 	},
 
   by: function(type){
@@ -259,27 +230,27 @@ OPDS.Support.LinkSet = _.Class({
 	links: function(){
 		return _.keys(this.store.lnk_store);
 	},
-			
+
 	rels: function(){
 		return _.keys(this.store.rel_store);
 	},
-			
+
 	texts: function(){
 		return _.keys(this.store.txt_store);
 	},
 
 	inspect: function(){
-	  
+
 	},
 
-	first: function(){ 
+	first: function(){
 	  return _.first(this);
 	},
-			
+
   last: function(){
 		return _.last(this);
 	},
- 
+
 	__collection: function(type){
 		switch (type){
 		case 'link': return this.store.lnk_store;
@@ -298,30 +269,44 @@ OPDS.Support.LinkSet = _.Class({
 	  }, this);
   }
 });
-
-
-// // //
-// Feed
-//
-OPDS.Feed = _.Class({
-  initialize: function(browser){
+/**
+ * Feed class is used as an ancestor to NavigationFeed and AcquisitionFeed it handles
+ * all the parsing
+ * @abstract Not really abstract as it's full fledged, but it should not be used directly
+ */
+OPDS.Feed = Class.$extend({
+  __init__: function(browser){
     this.browser = browser || new OPDS.Support.Browser();
     this.rawDoc = null;
   },
-  
-  extend: {
-    parseUrl: function(url, callback, browser, opts){
+
+  __classvars__: {
+    /**
+     * Parse the given url.
+     *
+     * If the resource at the give url is not an OPDS Catalog, this method will
+     * try to find a linked catalog.
+     * If many are available it will take the first one with a priority given to
+     * null rel or rel="related" catalogs.
+     *
+     * @param url [String] url to parse
+     * @param callback [Function]
+     * @param browser (see Feed.parseRaw)
+     * @param parserOpts parser options (unused at the moment)
+     * @see OPDS::Support::Browser
+     * @return [AcquisitionFeed, NavigationFeed, Entry, null] an instance of a parsed feed, entry or null
+     */
+    parseUrl: function(url, callback, browser, parserOpts){
       var browser = browser || new OPDS.Support.Browser();
       var self = this;
       browser.goTo(url, function(browser){
         if (browser.isOk()) {
-          var parsed = self.parseRaw(browser.body(), opts, browser);
+          var parsed = self.parseRaw(browser.body(), parserOpts, browser);
           if (parsed == null) {
             var disco = browser.discover(browser.currentLocation, function(){
               if (disco.size > 0) {
                 var d = disco.get('related');
                 if (d && d.length > 0){
-                  //console.log("Discovered : #{d.first.url}")
                   _.first(d).navigate(callback);
                 }
               }
@@ -335,7 +320,14 @@ OPDS.Feed = _.Class({
         }
       });
     },
-
+    /**
+     * Will parse a text stream as an OPDS Catalog, internaly used by #parseUrl
+     *
+     * @param txt [String] text to parse
+     * @param opts [Hash] options to pass to the parser
+     * @param browser [OPDS.Support.Browser] an optional compatible browser to use
+     * @return [AcquisitionFeed, NavigationFeed] an instance of a parsed feed or null
+     */
     parseRaw: function(txt, opts, browser){
       var parser = new OPDS.Parser(opts);
       return parser.parse(txt, browser);
@@ -349,38 +341,38 @@ OPDS.Feed = _.Class({
     }
   },
 
-  // read xml entries into entry struct
+  /**
+   * @private
+   * read xml entries into the entry list struct
+   */
   serialize: function(){
-    // Id
     this.id = this.rawDoc.find('feed>id').text();
-    // Icon
+    /**
+      @return [String] Feed icon definition
+     */
     this.icon = this.rawDoc.find('feed>icon').text();
-    // Title
+    /**
+      @return [String] Feed title
+     */
     this.title = this.rawDoc.find('feed>title').text();
-    // Author
     this.author = {
       name: this.rawDoc.find('feed>author>name').text(),
       uri: this.rawDoc.find('feed>author>uri').text(),
       email: this.rawDoc.find('feed>author>email').text()
     };
-    // Entries
     this.entries = _(this.rawDoc.find('feed>entry')).chain().toArray().map(function(el){
       return OPDS.Entry.fromJQuery($(el), this.browser);
     }, this).value();
-    // Links
     OPDS.Support.LinkSet.extract(this, 'feed>link');
   },
 
   nextPageUrl: function(){
-    //return links.linkUrl('rel' => 'next');
   },
 
   prevPageUrl: function(){
-    //return links.linkUrl('rel' => 'prev');
   },
 
   isPaginated: function(){
-    //!next_page_url.nil?||!prev_page_url.nil?
   },
 
   isFirstPage: function(){
@@ -403,27 +395,33 @@ OPDS.Feed = _.Class({
   }
 });
 
-// // //
-// NavigationFeed
-//
-OPDS.NavigationFeed = _.Class(OPDS.Feed, {});
+/**
+ * Represents a navigation feed
+ * @see http://opds-spec.org/specs/opds-catalog-1-0-20100830/#Navigation_Feeds
+ */
+OPDS.NavigationFeed = OPDS.Feed.$extend({
+  /**
+   * Collection of all Navigation feeds found in this feed
+   * @return [OPDS::Support::LinkSet] found links
+   */
+  navigationLinks: function(){
 
-// // //
-// AcquisitionFeed
-//
-OPDS.AcquisitionFeed = _.Class(OPDS.Feed, {});
+  }
+});
 
+/**
+ * Represents an acquisition feed
+ * @see http://opds-spec.org/specs/opds-catalog-1-0-20100830/#Acquisition_Feeds
+ */
+OPDS.AcquisitionFeed = OPDS.Feed.$extend({});
 
-// // //
-// Entry
-//
-OPDS.Entry = _.Class({
-	initialize: function(browser){
+OPDS.Entry = Class.$extend({
+	__init__: function(browser){
 		this.browser = browser || new OPDS.Support.Browser();
 		this.rawDoc = null;
 	},
 
-	extend: {
+	__classvars__: {
 		fromJQuery: function(content, browser){
 		  var z = new OPDS.Entry(browser);
 		  z.rawDoc = content;
@@ -433,37 +431,27 @@ OPDS.Entry = _.Class({
 	},
 
 	serialize: function(){
-    // Get full entry element from document
 		if (this.rawDoc.find('entry').length == 1){
 		  this.rawDoc = this.rawDoc.find('entry');
 		}
-		// Title
 		this.title = this.rawDoc.find('title').text() || null;
-		// Id
 		this.id = this.rawDoc.find('id').text() || null;
-		// Summary
 		this.summary = this.rawDoc.find('summary').text() || null;
-		// Content
     this.content = this.rawDoc.find('content').text() || null;
-    // Rights
     this.rights = this.rawDoc.find('rights').text() || null;
-    // Subtitle
     this.subtitle = this.rawDoc.find('subtitle').text() || null;
-		// Updated
 		var d = this.rawDoc.find('updated').text();
 		try {
 		  this.updated = Date.parse(d);
 		} catch (e) {
 		  this.updated = null;
 		}
-		// Published
 		d = this.rawDoc.find('published').text();
 		try {
 		  this.published = Date.parse(d);
 		} catch (e) {
 		  this.published = null;
 		}
-    // Authors
     this.authors = _(this.rawDoc.find('author')).chain().toArray().map(function(auth){
      return {
        name: this.rawDoc.find('author>name', auth).text(),
@@ -471,9 +459,7 @@ OPDS.Entry = _.Class({
        email: this.rawDoc.find('author>email', auth).text()
      };
     }, this).value();
-    // Author
 		this.author =  _.first(this.authors);
-		// Contributors
     this.contributors = _(this.rawDoc.find('contributor')).chain().toArray().map(function(auth){
      return {
        name: this.rawDoc.find('contributor>name', auth).text(),
@@ -481,22 +467,11 @@ OPDS.Entry = _.Class({
        email: this.rawDoc.find('contributor>email', auth).text()
      };
     }, this).value();
-    // Links
     OPDS.Support.LinkSet.extract(this, 'link');
-    // Categories
     this.categories = this.rawDoc.find('category').map(function(i, n){
       return [$(n).attr('label'), $(n).attr('term')];
     });
-    // DC Metas
     this.dcmetas = {};
-    // dcmetas=Hash.new
-    // prefs=@namespaces.reject{|_,v| !%W[http://purl.org/dc/terms/ http://purl.org/dc/elements/1.1/].include?v}
-    // prefs.keys.map{|p| p.split(':').last}.each do |pref|
-    //   raw_doc.xpath('./'+pref+':*',@namespaces).each do |n|
-    //      @dcmetas[n.name]=[] unless  @dcmetas[n.name]
-    //      @dcmetas[n.name].push [n.text, n]
-    //    end
-    //  end
   },
 
   acquisitionLinks: function(){
@@ -527,7 +502,7 @@ OPDS.Entry = _.Class({
 		}
 		return null;
 	},
-	
+
 	complete: function(callback){
     if (this.completeLink()){
       return this.completeLink().navigate(callback);
@@ -536,6 +511,6 @@ OPDS.Entry = _.Class({
   },
 
   inspect: function(){
-    
+
 	}
 });

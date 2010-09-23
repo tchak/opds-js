@@ -2,7 +2,7 @@
 // // //
 // Browser
 //
-OPDS.Support.Browser = _.Class({
+OPDS.Support.Browser = Class.$extend({
 	goTo: function(uri, callback){
 		var url = new URI(uri).toString();
 		var browser = this;

@@ -2,13 +2,13 @@
 // // //
 // Entry
 //
-OPDS.Entry = _.Class({
-	initialize: function(browser){
+OPDS.Entry = Class.$extend({
+	__init__: function(browser){
 		this.browser = browser || new OPDS.Support.Browser();
 		this.rawDoc = null;
 	},
 
-	extend: {
+	__classvars__: {
 		fromJQuery: function(content, browser){
 		  var z = new OPDS.Entry(browser);
 		  z.rawDoc = content;

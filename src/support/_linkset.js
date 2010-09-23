@@ -2,8 +2,8 @@
 // // //
 //  Link
 //
-OPDS.Support.Link = _.Class({
-  initialize: function(array, browser){
+OPDS.Support.Link = Class.$extend({
+  __init__: function(array, browser){
 	  this.browser = browser || new OPDS.Support.Browser();
 	  if (this.browser.currentLocation){
 		  array[1] = URI.join(this.browser.currentLocation, array[1]).toString();
@@ -27,8 +27,8 @@ OPDS.Support.Link = _.Class({
 // // //
 //  LinkSet
 //
-OPDS.Support.LinkSet = _.Class({
-  initialize: function(browser){
+OPDS.Support.LinkSet = Class.$extend({
+  __init__: function(browser){
 	  this.browser = browser || new OPDS.Support.Browser();
 	  this.length = 0;
 		this.store = {
@@ -39,7 +39,7 @@ OPDS.Support.LinkSet = _.Class({
 		};
 	},
 
-  extend: {
+  __classvars__: {
     extract: function(element, expr){
       element.links = new OPDS.Support.LinkSet(element.browser);
       element.rawDoc.find(expr).each(function(i, n){
