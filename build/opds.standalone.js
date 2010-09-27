@@ -6567,23 +6567,43 @@ window.jQuery = window.$ = jQuery;
   });
 })();
 
+/**
+ * Module containing the whole OPDS parsing library
+ */
 var OPDS = {
   Support: {},
+  /**
+   * Convinience call to Feed.parseUrl
+	 * @see Feed.parseUrl
+	 * @return (see Feed.parseUrl)
+	 */
   access: function(feed, callback){
     return OPDS.Feed.parseUrl(feed, callback);
   }
 };
 
-
+/**
+ * Class in charge of discovering the type of the given text stream.
+ * It will dispatch the pre-parsed atom content to the desired class
+ * @see OPDS.AcquisitionFeed
+ * @see OPDS.NavigationFeed
+ * @see OPDS.Entry
+ */
 OPDS.Parser = Class.$extend({
 	initialize: function(opts){
 		this.sniffedType = null;
 		this.options = _.extend({}, opts);
 	},
 
+  /**
+   * Parse a text stream
+	 * @param content [String] text stream
+	 * @param browser (see Feed.parseUrl)
+	 * @return [NavigationFeed, AcquisitionFeed, Entry] the parsed structure
+	 */
 	parse: function(content, browser){
-	  var ret = this.__parseXML(content);
-		this.sniffedType = this.__sniff(ret);
+	  var ret = this.parseXML(content);
+		this.sniffedType = this.sniff(ret);
 		switch (this.sniffedType){
 		case 'acquisition': return new OPDS.AcquisitionFeed.fromJQuery(ret, browser);
 		case 'navigation': return new OPDS.NavigationFeed.fromJQuery(ret, browser);
@@ -6592,7 +6612,7 @@ OPDS.Parser = Class.$extend({
 		}
 	},
 
-  __parseXML: function(responseText){
+  parseXML: function(responseText){
     if (window.ActiveXObject) {
       doc = new ActiveXObject('Microsoft.XMLDOM');
       doc.async = 'false';
@@ -6604,7 +6624,12 @@ OPDS.Parser = Class.$extend({
     return $(doc);
   },
 
-	__sniff: function(doc){
+  /**
+   * Sniff a provided nokogiri document to detect it's type
+	 * @param doc [jQuery Object] Document to sniff
+	 * @return ['acquisition', 'navigation', 'entry', nil] sniffed type
+	 */
+	sniff: function(doc){
 	  var element = doc[0];
 	  if (element && element.documentElement && $.nodeName(element.documentElement, 'entry')){
 		  return 'entry';
@@ -6625,8 +6650,16 @@ OPDS.Parser = Class.$extend({
 		}
 	}
 });
-
+/**
+ * Browser class, it will be used to access the Internet.
+ * Currently based on jQuery ajax and provide IE8/9 cross domain request support
+ */
 OPDS.Support.Browser = Class.$extend({
+  /**
+   * Navigate to the provided uri
+	 * @param uri [String] uri to go to
+	 * @param callback
+	 */
 	goTo: function(uri, callback){
 		var url = new URI(uri).str();
 		var browser = this;
@@ -6658,22 +6691,33 @@ OPDS.Support.Browser = Class.$extend({
 		}
 	},
 
+  /**
+   * Last page load was ok ?
+	 * @return [boolean]
+	 */
 	isOk: function(){
 	  return this.status() == 200;
 	},
 
+  /**
+   * @return [integer] Last page load return code
+	 */
 	status: function(){
 	  return this.lastResponse ? this.lastResponse.status : null;
 	},
 
-  headers: function(){
-   return this.lastResponse ? this.lastResponse.getAllResponseHeaders() : null;
-  },
-
+  /**
+   * @return [String] Last page body
+	 */
 	body: function(){
 		return this.lastResponse ? this.lastResponse.responseText: null;
 	},
 
+  /**
+   * Try to discover catalog links at the given url
+	 * @param [String] url to search
+	 * @return [OPDS.Support.LinkSet, false] discovered links
+	 */
 	discover: function(url, callback){
 	  this.goTo(url, function(browser){
 	    if (browser.isOk()){
@@ -6689,21 +6733,48 @@ OPDS.Support.Browser = Class.$extend({
 	  });
   }
 });
-
+/**
+ * A link is actually an array composed as :
+ * [rel, url , title, mimetype, opds:price, opds:currency]
+ */
 OPDS.Support.Link = Class.$extend({
   __init__: function(array, browser){
 	  this.browser = browser || new OPDS.Support.Browser();
 	  if (this.browser.currentLocation){
 		  array[1] = URI.join(this.browser.currentLocation, array[1]).str();
 		}
+		/**
+		 * @return [String] link rel
+		 */
 		this.rel = array[0] || null;
+		/**
+		 * @return [String] link url
+		 */
 		this.url = array[1] || null;
+		/**
+		 * @return [String] link title
+		 */
 		this.title = array[2] || null;
+		/**
+		 * @return [String] link type
+		 */
 		this.type = array[3] || null;
+		/**
+		 * @return [String] link price
+		 */
 		this.price = array[4] || null;
+		/**
+		 * @return [String] link currency
+		 */
 		this.currency = array[5] || null;
 	},
 
+  /**
+   * Will go parsing the resource at this url.
+	 * Proxy to Feed.parseUrl
+	 * @see Feed.parseUrl
+	 * @return (see Feed.parseUrl)
+	 */
   navigate: function(callback){
 	  return OPDS.Feed.parseUrl(this.url, callback, this.browser);
 	},
@@ -6712,7 +6783,15 @@ OPDS.Support.Link = Class.$extend({
   }
 });
 
+/**
+ * Set of links.
+ *
+ * It provides ways to query and filter the set
+ */
 OPDS.Support.LinkSet = Class.$extend({
+  /**
+   * @param browser (see Feed.parseUrl)
+   */
   __init__: function(browser){
 	  this.browser = browser || new OPDS.Support.Browser();
 	  this.length = 0;
@@ -6746,6 +6825,11 @@ OPDS.Support.LinkSet = Class.$extend({
     }
   },
 
+  /**
+   * Add a link to the set
+	 * @param key [String] rel value where to add the link
+	 * @param value [Array] remainder of link structure
+	 */
   set: function(key, value){
 	  var link = new OPDS.Support.Link([key].concat(value), this.browser);
 	  var s = this.store, i = this.length;
@@ -6769,41 +6853,82 @@ OPDS.Support.LinkSet = Class.$extend({
 	},
 
 	get: function(key){
-    return this.__remap(this.store.rel[key]);
+    return this.remap(this.store.rel[key]);
 	},
 
+  /**
+   * Push a link to the set
+	 * @param rel (see Link#rel)
+	 * @param link (see Link#url)
+	 * @param text (see Link#title)
+	 * @param price (see Link#price)
+	 * @param currency (see Link#currency)
+	 */
 	push: function(rel, link, text, type){
 	  this.set(rel, [link, text, type]);
 	},
 
+  /**
+   * Find first link url corresponding to the query
+	 * @example Query :
+	 * { 'rel': "related" }
+	 */
 	linkUrl: function(k){
   },
 
+  /**
+   * Find first link rel corresponding to the query
+	 * @example Query :
+	 * { 'rel': "related" }
+	 */
 	linkRel: function(k){
 	},
 
+  /**
+   * Find first link text corresponding to the query
+	 * @example Query :
+	 * { 'rel': "related" }
+	 */
 	linkText: function(k){
 	},
 
+  /**
+   * Find first link type corresponding to the query
+	 * @example Query :
+	 * { 'rel': "related" }
+	 */
 	linkType: function(k){
 	},
 
+  /**
+   * Collection indexed by given type
+	 * @param [String] in ('link', 'rel', 'txt', 'type')
+	 */
   by: function(type){
     var hash = {};
     _.each(this.store[type], function(value, key){
-      return hash[key] = this.__remap(value);
+      return hash[key] = this.remap(value);
     }, this);
     return hash;
   },
 
+  /**
+   * @return [Array] all links
+   */
 	links: function(){
 		return _.keys(this.store.link);
 	},
 
+  /**
+   * @return [Array] all rels
+   */
 	rels: function(){
 		return _.keys(this.store.rel);
 	},
 
+  /**
+   * @return [Array] all titles
+   */
 	texts: function(){
 		return _.keys(this.store.txt);
 	},
@@ -6812,15 +6937,26 @@ OPDS.Support.LinkSet = Class.$extend({
 
 	},
 
+  /**
+   * @return [Link] First link in store
+	 */
 	first: function(){
 	  return _.first(this);
 	},
 
+  /**
+   * @return [Link] Last link in store
+	 */
   last: function(){
 		return _.last(this);
 	},
 
-	__remap: function(tab){
+  /**
+   * recover links for an index table
+   * @param [Array] Indexes
+	 * @return [Array] Corresponding links
+	 */
+	remap: function(tab){
 	  if (!tab || tab.length == 0){
 	    return null;
 	  }
@@ -6850,11 +6986,11 @@ OPDS.Feed = Class.$extend({
      * null rel or rel="related" catalogs.
      *
      * @param url [String] url to parse
-     * @param callback [Function]
+     * @param callback [Function] called with [AcquisitionFeed, NavigationFeed, Entry, null] an instance of a parsed feed, entry or null
      * @param browser (see Feed.parseRaw)
      * @param parserOpts parser options (unused at the moment)
      * @see OPDS::Support::Browser
-     * @return [AcquisitionFeed, NavigationFeed, Entry, null] an instance of a parsed feed, entry or null
+     * @return [OPDS.Feed] self
      */
     parseUrl: function(url, callback, browser, parserOpts){
       var browser = browser || new OPDS.Support.Browser();
@@ -6879,6 +7015,7 @@ OPDS.Feed = Class.$extend({
           callback.call(browser, false);
         }
       });
+      return this;
     },
     /**
      * Will parse a text stream as an OPDS Catalog, internaly used by #parseUrl
@@ -6906,49 +7043,93 @@ OPDS.Feed = Class.$extend({
    * read xml entries into the entry list struct
    */
   serialize: function(){
+    /**
+     * @return [String] Feed id
+     */
     this.id = this.rawDoc.find('feed>id').text();
     /**
-      @return [String] Feed icon definition
+     * @return [String] Feed icon definition
      */
     this.icon = this.rawDoc.find('feed>icon').text();
     /**
-      @return [String] Feed title
+     * @return [String] Feed title
      */
     this.title = this.rawDoc.find('feed>title').text();
+    /**
+     * @return [Hash] Feed author (keys : name,uri,email)
+     */
     this.author = {
       name: this.rawDoc.find('feed>author>name').text(),
       uri: this.rawDoc.find('feed>author>uri').text(),
       email: this.rawDoc.find('feed>author>email').text()
     };
+    /**
+     * Entry list
+ 		 * @see Entry
+ 		 * @return [Array<Entry>] list of parsed entries
+ 		 */
     this.entries = _(this.rawDoc.find('feed>entry')).chain().toArray().map(function(el){
       return OPDS.Entry.fromJQuery($(el), this.browser);
     }, this).value();
+    /**
+     * @return [OPDS.Support.LinkSet] Set with atom feed level links
+		 */
     OPDS.Support.LinkSet.extract(this, 'feed>link');
   },
 
+  /**
+   * @return [String] Next page url
+   */
   nextPageUrl: function(){
   },
 
+  /**
+   * @return [String] Previous page url
+   */
   prevPageUrl: function(){
   },
 
+  /**
+   * Is the feed paginated ?
+	 * @return Boolean
+   */
   isPaginated: function(){
   },
 
+  /**
+   * Is it the first page ?
+	 * @return Boolean
+	 */
   isFirstPage: function(){
     return this.isPaginated() ? !this.prevPageUrl() : false;
   },
 
+  /**
+   * Is it the last page ?
+	 * @return Boolean
+	 */
   isLastPage: function(){
     return this.isPaginated() ? !this.nextPageUrl() : false;
   },
 
-  nextPage: function(){
-    return Feed.parseUrl(this.nextPageUrl(), this.browser);
+  /**
+   * Get next page feed
+   * @param callback [Function]
+	 * @return (see Feed.parseUrl)
+	 */
+  nextPage: function(callback){
+    Feed.parseUrl(this.nextPageUrl(), callback, this.browser);
+    return this;
   },
 
-  prevPage: function(){
-    return Feed.parseUrl(this.prevPageUrl(), this.browser);
+  /**
+   * Get previous page feed
+   * @param callback [Function]
+	 * @return (see Feed.parseUrl)
+	 */
+  prevPage: function(callback){
+    Feed.parseUrl(this.prevPageUrl(), callback, this.browser);
+    return this;
   },
 
   inspect: function(){
@@ -6962,10 +7143,19 @@ OPDS.Feed = Class.$extend({
 OPDS.NavigationFeed = OPDS.Feed.$extend({
   /**
    * Collection of all Navigation feeds found in this feed
-   * @return [OPDS::Support::LinkSet] found links
+   * @return [OPDS.Support.LinkSet] found links
    */
   navigationLinks: function(){
 
+  },
+
+  __classvars__: {
+    fromJQuery: function(content, browser){
+      var z = new OPDS.NavigationFeed(browser);
+      z.rawDoc = content;
+      z.serialize();
+      return z;
+    }
   }
 });
 
@@ -6973,15 +7163,98 @@ OPDS.NavigationFeed = OPDS.Feed.$extend({
  * Represents an acquisition feed
  * @see http://opds-spec.org/specs/opds-catalog-1-0-20100830/#Acquisition_Feeds
  */
-OPDS.AcquisitionFeed = OPDS.Feed.$extend({});
-
+OPDS.AcquisitionFeed = OPDS.Feed.$extend({
+  __classvars__: {
+    fromJQuery: function(content, browser){
+      var z = new OPDS.AcquisitionFeed(browser);
+      z.rawDoc = content;
+      z.serialize();
+      return z;
+    }
+  }
+});
+/**
+ * Represents a catalog entry
+ */
 OPDS.Entry = Class.$extend({
+  /**
+   * @param browser (see Feed.parseUrl)
+   */
 	__init__: function(browser){
 		this.browser = browser || new OPDS.Support.Browser();
+		/**
+		 * "Raw" jQuery document used while parsing.
+		 * It might useful to access atom foreign markup
+		 * @return [jQuery Object] Parsed document
+		 */
 		this.rawDoc = null;
+		/**
+		 * @return [String] entry title
+		 */
+		this.title = null;
+		/**
+		 * @return [String] entry id
+		 */
+		this.id = null;
+		/**
+		 * @return [String] entry summary
+		 */
+		this.summary = null;
+		/**
+		 * @return [String] entry content
+		 */
+    this.content = null;
+    /**
+		 * @return [String] entry rights
+		 */
+    this.rights = null;
+    /**
+		 * @return [String] entry subtitle
+		 */
+    this.subtitle = null;
+		/**
+		 * @return [String] entry updated date
+		 */
+ 		this.updated = null;
+ 		/**
+ 		 * @return [String] entry published date
+ 		 */
+ 		this.published = null;
+    /**
+ 		 * @return [Array] entry parsed authors
+ 		 */
+ 		this.authors = [];
+ 		/**
+     * First Author
+		 * @return [Hash]
+		 */
+		this.author = null;
+ 		/**
+ 		 * @return [Array] entry parsed contributors
+ 		 */
+    this.contributors = [];
+    /**
+     * @return [Array] Categories found
+     */
+    this.categories = [];
+    /**
+     * @return [OPDS.Support.LinkSet] Set of links found in the entry
+     */
+    this.links = OPDS.Support.LinkSet(browser);
+    /**
+     * @return [Hash] Hash of found dublin core metadata found in the entry
+		 * @see http://dublincore.org/documents/dcmi-terms/
+		 */
+    this.dcmetas = {};
 	},
 
 	__classvars__: {
+	  /**
+	   * Create an entry from a jquery object
+ 		 * @param content [jQuery Object] jQuery object (should be <entry>)
+ 		 * @param browser (see Feed.parseUrl)
+ 		 * @return [Entry]
+ 		 */
 		fromJQuery: function(content, browser){
 		  var z = new OPDS.Entry(browser);
 		  z.rawDoc = content;
@@ -6990,6 +7263,10 @@ OPDS.Entry = Class.$extend({
 		}
 	},
 
+  /**
+   * Read the provided document into the entry struct
+	 * @private
+	 */
 	serialize: function(){
 		if (this.rawDoc.find('entry').length == 1){
 		  this.rawDoc = this.rawDoc.find('entry');
@@ -7027,13 +7304,15 @@ OPDS.Entry = Class.$extend({
        email: this.rawDoc.find('contributor>email', auth).text()
      };
     }, this).value();
-    OPDS.Support.LinkSet.extract(this, 'link');
     this.categories = this.rawDoc.find('category').map(function(i, n){
       return [$(n).attr('label'), $(n).attr('term')];
     });
-    this.dcmetas = {};
+    OPDS.Support.LinkSet.extract(this, 'link');
   },
 
+  /**
+   * @return [Array] acquisition link subset
+   */
   acquisitionLinks: function(){
     var relStart = /^http:\/\/opds-spec.org\/acquisition/;
     return _(this.links.by('rel')).chain().reject(function(l, key){
@@ -7041,12 +7320,19 @@ OPDS.Entry = Class.$extend({
     }).flatten().value();
 	},
 
+  /**
+   * Is it a partial atom entry ?
+	 * @return [boolean]
+	 */
 	isPartial: function(){
 		return _.any(this.links.by('rel')['alternate'], function(l){
 			return l.type == 'application/atom+xml' || l.type == 'application/atom+xml;type=entry';
 		});
 	},
 
+  /**
+   * @return [OPDS.Support.Link] link to the complete entry
+	 */
   completeLink: function(){
     if (this.isPartial()){
 		  return _.detect(this.links.by('rel')['alternate'], function(l){
@@ -7056,6 +7342,9 @@ OPDS.Entry = Class.$extend({
 		return null;
   },
 
+  /**
+   * @return [String] URL to the complete entry
+	 */
 	completeUrl: function(){
 	  if (this.completeLink()){
 	    return this.completeLink().url;
@@ -7063,11 +7352,15 @@ OPDS.Entry = Class.$extend({
 		return null;
 	},
 
+	/**
+	 * @param callback [Function]
+	 * @return [OPDS.Entry] self
+	 */
 	complete: function(callback){
     if (this.completeLink()){
       return this.completeLink().navigate(callback);
     }
-    return null;
+    return this;
   },
 
   inspect: function(){

@@ -1,8 +1,13 @@
-
-// // //
-// Browser
-//
+/**
+ * Browser class, it will be used to access the Internet.
+ * Currently based on jQuery ajax and provide IE8/9 cross domain request support
+ */
 OPDS.Support.Browser = Class.$extend({
+  /**
+   * Navigate to the provided uri
+	 * @param uri [String] uri to go to
+	 * @param callback
+	 */
 	goTo: function(uri, callback){
 		var url = new URI(uri).str();
 		var browser = this;
@@ -15,7 +20,6 @@ OPDS.Support.Browser = Class.$extend({
 		  });
 		} catch (e) {
 		  if (jQuery.browser.msie && window.XDomainRequest) {
-        // Use Microsoft XDR
         var xdr = new XDomainRequest();
         xdr.open("get", url);
         xdr.onload = function(){
@@ -34,23 +38,34 @@ OPDS.Support.Browser = Class.$extend({
 		  }
 		}
 	},
-  
+
+  /**
+   * Last page load was ok ?
+	 * @return [boolean]
+	 */
 	isOk: function(){
 	  return this.status() == 200;
 	},
   
+  /**
+   * @return [integer] Last page load return code
+	 */
 	status: function(){
 	  return this.lastResponse ? this.lastResponse.status : null;
 	},
-  
-  headers: function(){
-   return this.lastResponse ? this.lastResponse.getAllResponseHeaders() : null;
-  },
-  
+
+  /**
+   * @return [String] Last page body
+	 */
 	body: function(){
 		return this.lastResponse ? this.lastResponse.responseText: null;
 	},
-  
+
+  /**
+   * Try to discover catalog links at the given url
+	 * @param [String] url to search
+	 * @return [OPDS.Support.LinkSet, false] discovered links
+	 */
 	discover: function(url, callback){
 	  this.goTo(url, function(browser){
 	    if (browser.isOk()){

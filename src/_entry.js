@@ -1,14 +1,85 @@
-
-// // //
-// Entry
-//
+/**
+ * Represents a catalog entry
+ */
 OPDS.Entry = Class.$extend({
+  /**
+   * @param browser (see Feed.parseUrl)
+   */
 	__init__: function(browser){
 		this.browser = browser || new OPDS.Support.Browser();
+		/**
+		 * "Raw" jQuery document used while parsing.
+		 * It might useful to access atom foreign markup
+		 * @return [jQuery Object] Parsed document
+		 */
 		this.rawDoc = null;
+		/**
+		 * @return [String] entry title
+		 */
+		this.title = null;
+		/**
+		 * @return [String] entry id
+		 */
+		this.id = null;
+		/**
+		 * @return [String] entry summary
+		 */
+		this.summary = null;
+		/**
+		 * @return [String] entry content
+		 */
+    this.content = null;
+    /**
+		 * @return [String] entry rights
+		 */
+    this.rights = null;
+    /**
+		 * @return [String] entry subtitle
+		 */
+    this.subtitle = null;
+		/**
+		 * @return [String] entry updated date
+		 */
+ 		this.updated = null;
+ 		/**
+ 		 * @return [String] entry published date
+ 		 */
+ 		this.published = null;
+    /**
+ 		 * @return [Array] entry parsed authors
+ 		 */
+ 		this.authors = [];
+ 		/**
+     * First Author
+		 * @return [Hash]
+		 */
+		this.author = null;
+ 		/**
+ 		 * @return [Array] entry parsed contributors
+ 		 */
+    this.contributors = [];
+    /**
+     * @return [Array] Categories found
+     */
+    this.categories = [];
+    /**
+     * @return [OPDS.Support.LinkSet] Set of links found in the entry
+     */
+    this.links = OPDS.Support.LinkSet(browser);
+    /**
+     * @return [Hash] Hash of found dublin core metadata found in the entry
+		 * @see http://dublincore.org/documents/dcmi-terms/
+		 */
+    this.dcmetas = {};
 	},
 
 	__classvars__: {
+	  /**
+	   * Create an entry from a jquery object 
+ 		 * @param content [jQuery Object] jQuery object (should be <entry>)
+ 		 * @param browser (see Feed.parseUrl)
+ 		 * @return [Entry]
+ 		 */
 		fromJQuery: function(content, browser){
 		  var z = new OPDS.Entry(browser);
 		  z.rawDoc = content;
@@ -17,38 +88,32 @@ OPDS.Entry = Class.$extend({
 		}
 	},
 
+  /**
+   * Read the provided document into the entry struct 
+	 * @private
+	 */
 	serialize: function(){
-    // Get full entry element from document
 		if (this.rawDoc.find('entry').length == 1){
 		  this.rawDoc = this.rawDoc.find('entry');
 		}
-		// Title
 		this.title = this.rawDoc.find('title').text() || null;
-		// Id
 		this.id = this.rawDoc.find('id').text() || null;
-		// Summary
 		this.summary = this.rawDoc.find('summary').text() || null;
-		// Content
     this.content = this.rawDoc.find('content').text() || null;
-    // Rights
     this.rights = this.rawDoc.find('rights').text() || null;
-    // Subtitle
     this.subtitle = this.rawDoc.find('subtitle').text() || null;
-		// Updated
 		var d = this.rawDoc.find('updated').text();
 		try {
 		  this.updated = Date.parse(d);
 		} catch (e) {
 		  this.updated = null;
 		}
-		// Published
 		d = this.rawDoc.find('published').text();
 		try {
 		  this.published = Date.parse(d);
 		} catch (e) {
 		  this.published = null;
 		}
-    // Authors
     this.authors = _(this.rawDoc.find('author')).chain().toArray().map(function(auth){
      return {
        name: this.rawDoc.find('author>name', auth).text(),
@@ -56,9 +121,7 @@ OPDS.Entry = Class.$extend({
        email: this.rawDoc.find('author>email', auth).text()
      };
     }, this).value();
-    // Author
 		this.author =  _.first(this.authors);
-		// Contributors
     this.contributors = _(this.rawDoc.find('contributor')).chain().toArray().map(function(auth){
      return {
        name: this.rawDoc.find('contributor>name', auth).text(),
@@ -66,24 +129,15 @@ OPDS.Entry = Class.$extend({
        email: this.rawDoc.find('contributor>email', auth).text()
      };
     }, this).value();
-    // Links
-    OPDS.Support.LinkSet.extract(this, 'link');
-    // Categories
     this.categories = this.rawDoc.find('category').map(function(i, n){
       return [$(n).attr('label'), $(n).attr('term')];
     });
-    // DC Metas
-    this.dcmetas = {};
-    // dcmetas=Hash.new
-    // prefs=@namespaces.reject{|_,v| !%W[http://purl.org/dc/terms/ http://purl.org/dc/elements/1.1/].include?v}
-    // prefs.keys.map{|p| p.split(':').last}.each do |pref|
-    //   raw_doc.xpath('./'+pref+':*',@namespaces).each do |n|
-    //      @dcmetas[n.name]=[] unless  @dcmetas[n.name]
-    //      @dcmetas[n.name].push [n.text, n]
-    //    end
-    //  end
+    OPDS.Support.LinkSet.extract(this, 'link');
   },
 
+  /**
+   * @return [Array] acquisition link subset
+   */
   acquisitionLinks: function(){
     var relStart = /^http:\/\/opds-spec.org\/acquisition/;
     return _(this.links.by('rel')).chain().reject(function(l, key){
@@ -91,12 +145,19 @@ OPDS.Entry = Class.$extend({
     }).flatten().value();
 	},
 
+  /**
+   * Is it a partial atom entry ?
+	 * @return [boolean]
+	 */
 	isPartial: function(){
 		return _.any(this.links.by('rel')['alternate'], function(l){
 			return l.type == 'application/atom+xml' || l.type == 'application/atom+xml;type=entry';
 		});
 	},
 
+  /**
+   * @return [OPDS.Support.Link] link to the complete entry
+	 */
   completeLink: function(){
     if (this.isPartial()){
 		  return _.detect(this.links.by('rel')['alternate'], function(l){
@@ -106,6 +167,9 @@ OPDS.Entry = Class.$extend({
 		return null;
   },
 
+  /**
+   * @return [String] URL to the complete entry
+	 */
 	completeUrl: function(){
 	  if (this.completeLink()){
 	    return this.completeLink().url;
@@ -113,11 +177,15 @@ OPDS.Entry = Class.$extend({
 		return null;
 	},
 	
+	/**
+	 * @param callback [Function]
+	 * @return [OPDS.Entry] self
+	 */
 	complete: function(callback){
     if (this.completeLink()){
       return this.completeLink().navigate(callback);
     }
-    return null;
+    return this;
   },
 
   inspect: function(){

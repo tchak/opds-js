@@ -19,11 +19,11 @@ OPDS.Feed = Class.$extend({
      * null rel or rel="related" catalogs.
      *
      * @param url [String] url to parse
-     * @param callback [Function]
+     * @param callback [Function] called with [AcquisitionFeed, NavigationFeed, Entry, null] an instance of a parsed feed, entry or null
      * @param browser (see Feed.parseRaw)
      * @param parserOpts parser options (unused at the moment)
      * @see OPDS::Support::Browser
-     * @return [AcquisitionFeed, NavigationFeed, Entry, null] an instance of a parsed feed, entry or null
+     * @return [OPDS.Feed] self
      */
     parseUrl: function(url, callback, browser, parserOpts){
       var browser = browser || new OPDS.Support.Browser();
@@ -48,6 +48,7 @@ OPDS.Feed = Class.$extend({
           callback.call(browser, false);
         }
       });
+      return this;
     },
     /**
      * Will parse a text stream as an OPDS Catalog, internaly used by #parseUrl
@@ -75,56 +76,93 @@ OPDS.Feed = Class.$extend({
    * read xml entries into the entry list struct
    */
   serialize: function(){
-    // Id
+    /**
+     * @return [String] Feed id
+     */
     this.id = this.rawDoc.find('feed>id').text();
     /**
-      @return [String] Feed icon definition
+     * @return [String] Feed icon definition
      */
     this.icon = this.rawDoc.find('feed>icon').text();
     /**
-      @return [String] Feed title
+     * @return [String] Feed title
      */
     this.title = this.rawDoc.find('feed>title').text();
-    // Author
+    /**
+     * @return [Hash] Feed author (keys : name,uri,email)
+     */
     this.author = {
       name: this.rawDoc.find('feed>author>name').text(),
       uri: this.rawDoc.find('feed>author>uri').text(),
       email: this.rawDoc.find('feed>author>email').text()
     };
-    // Entries
+    /**
+     * Entry list
+ 		 * @see Entry
+ 		 * @return [Array<Entry>] list of parsed entries
+ 		 */
     this.entries = _(this.rawDoc.find('feed>entry')).chain().toArray().map(function(el){
       return OPDS.Entry.fromJQuery($(el), this.browser);
     }, this).value();
-    // Links
+    /**
+     * @return [OPDS.Support.LinkSet] Set with atom feed level links
+		 */
     OPDS.Support.LinkSet.extract(this, 'feed>link');
   },
 
+  /**
+   * @return [String] Next page url
+   */
   nextPageUrl: function(){
-    //return links.linkUrl('rel' => 'next');
   },
 
+  /**
+   * @return [String] Previous page url
+   */
   prevPageUrl: function(){
-    //return links.linkUrl('rel' => 'prev');
   },
 
+  /**
+   * Is the feed paginated ?
+	 * @return Boolean
+   */
   isPaginated: function(){
-    //!next_page_url.nil?||!prev_page_url.nil?
   },
 
+  /**
+   * Is it the first page ?
+	 * @return Boolean
+	 */
   isFirstPage: function(){
     return this.isPaginated() ? !this.prevPageUrl() : false;
   },
 
+  /**
+   * Is it the last page ?
+	 * @return Boolean
+	 */
   isLastPage: function(){
     return this.isPaginated() ? !this.nextPageUrl() : false;
   },
 
-  nextPage: function(){
-    return Feed.parseUrl(this.nextPageUrl(), this.browser);
+  /**
+   * Get next page feed
+   * @param callback [Function]
+	 * @return (see Feed.parseUrl)
+	 */
+  nextPage: function(callback){
+    Feed.parseUrl(this.nextPageUrl(), callback, this.browser);
+    return this;
   },
 
-  prevPage: function(){
-    return Feed.parseUrl(this.prevPageUrl(), this.browser);
+  /**
+   * Get previous page feed
+   * @param callback [Function]
+	 * @return (see Feed.parseUrl)
+	 */
+  prevPage: function(callback){
+    Feed.parseUrl(this.prevPageUrl(), callback, this.browser);
+    return this;
   },
 
   inspect: function(){
@@ -138,10 +176,19 @@ OPDS.Feed = Class.$extend({
 OPDS.NavigationFeed = OPDS.Feed.$extend({
   /**
    * Collection of all Navigation feeds found in this feed
-   * @return [OPDS::Support::LinkSet] found links
+   * @return [OPDS.Support.LinkSet] found links
    */
   navigationLinks: function(){
     
+  },
+  
+  __classvars__: {
+    fromJQuery: function(content, browser){
+      var z = new OPDS.NavigationFeed(browser);
+      z.rawDoc = content;
+      z.serialize();
+      return z;
+    }
   }
 });
 
@@ -149,4 +196,13 @@ OPDS.NavigationFeed = OPDS.Feed.$extend({
  * Represents an acquisition feed
  * @see http://opds-spec.org/specs/opds-catalog-1-0-20100830/#Acquisition_Feeds
  */
-OPDS.AcquisitionFeed = OPDS.Feed.$extend({});
+OPDS.AcquisitionFeed = OPDS.Feed.$extend({
+  __classvars__: {
+    fromJQuery: function(content, browser){
+      var z = new OPDS.AcquisitionFeed(browser);
+      z.rawDoc = content;
+      z.serialize();
+      return z;
+    }
+  }
+});
