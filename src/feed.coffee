@@ -1,9 +1,9 @@
-/**
- * Feed class is used as an ancestor to NavigationFeed and AcquisitionFeed it handles
- * all the parsing
- * @abstract Not really abstract as it's full fledged, but it should not be used directly
- */
-OPDS.Feed = Class.$extend({
+#
+# Feed class is used as an ancestor to NavigationFeed and AcquisitionFeed it handles
+# all the parsing
+# @abstract Not really abstract as it's full fledged, but it should not be used directly
+#
+class OPDS.Feed
   __init__: function(browser){
     this.browser = browser || new OPDS.Support.Browser();
     this.rawDoc = null;
@@ -163,46 +163,30 @@ OPDS.Feed = Class.$extend({
   prevPage: function(callback){
     Feed.parseUrl(this.prevPageUrl(), callback, this.browser);
     return this;
-  },
 
-  inspect: function(){
-  }
-});
-
-/**
- * Represents a navigation feed 
- * @see http://opds-spec.org/specs/opds-catalog-1-0-20100830/#Navigation_Feeds
- */
-OPDS.NavigationFeed = OPDS.Feed.$extend({
-  /**
-   * Collection of all Navigation feeds found in this feed
-   * @return [OPDS.Support.LinkSet] found links
-   */
-  navigationLinks: function(){
-    
-  },
+#
+# Represents a navigation feed 
+# @see http://opds-spec.org/specs/opds-catalog-1-0-20100830/#Navigation_Feeds
+#
+class OPDS.NavigationFeed extends OPDS.Feed
+  #
+  # Collection of all Navigation feeds found in this feed
+  # @return [OPDS.Support.LinkSet] found links
+  #
+  navigationLinks: ->
   
-  __classvars__: {
-    fromJQuery: function(content, browser){
-      var z = new OPDS.NavigationFeed(browser);
-      z.rawDoc = content;
-      z.serialize();
-      return z;
-    }
-  }
-});
+  @fromJQuery: (content, browser) ->
+    z = new OPDS.NavigationFeed browser
+    z.rawDoc = content
+    z.serialize()
 
-/**
- * Represents an acquisition feed
- * @see http://opds-spec.org/specs/opds-catalog-1-0-20100830/#Acquisition_Feeds
- */
-OPDS.AcquisitionFeed = OPDS.Feed.$extend({
-  __classvars__: {
-    fromJQuery: function(content, browser){
-      var z = new OPDS.AcquisitionFeed(browser);
-      z.rawDoc = content;
-      z.serialize();
-      return z;
-    }
-  }
-});
+#
+# Represents an acquisition feed
+# @see http://opds-spec.org/specs/opds-catalog-1-0-20100830/#Acquisition_Feeds
+#
+class OPDS.AcquisitionFeed extends OPDS.Feed
+
+  @fromJQuery: (content, browser) ->
+    z = new OPDS.AcquisitionFeed browser
+    z.rawDoc = content
+    z.serialize()

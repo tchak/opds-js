@@ -1,11 +1,11 @@
 /**
  * Represents a catalog entry
  */
-OPDS.Entry = Class.$extend({
+class OPDS.Entry
   /**
    * @param browser (see Feed.parseUrl)
    */
-	__init__: function(browser){
+	constructor: function(browser){
 		this.browser = browser || new OPDS.Support.Browser();
 		/**
 		 * "Raw" jQuery document used while parsing.
@@ -185,10 +185,4 @@ OPDS.Entry = Class.$extend({
     if (this.completeLink()){
       return this.completeLink().navigate(callback);
     }
-    return this;
-  },
-
-  inspect: function(){
-    
-	}
-});
+    return this
